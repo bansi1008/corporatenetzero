@@ -41,8 +41,8 @@ const dataschema = new mongoose.Schema(
       type: Number,
     },
     scope: {
-      type: String,
-      enum: ["1", "2", "3"],
+      type: Number,
+      enum: [1, 2, 3],
       required: false,
     },
     sciencebasedtargets: {

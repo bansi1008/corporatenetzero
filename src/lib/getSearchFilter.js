@@ -5,17 +5,18 @@ export function getSearchFilter(searchQuery) {
   parts.forEach((part) => {
     const [key, ...rest] = part.split(":");
     if (!key || rest.length === 0) return;
-    if (!key || rest.length === 0) return;
 
     const value = rest.join(":");
 
     if (key === "scope") {
       {
         if (value.includes(",")) {
-          const scopesArray = value.split(",").map((v) => v.trim());
+          const scopesArray = value.split(",").map((v) => Number(v.trim()));
           filter.scope = { $in: scopesArray };
+          console.log("scoop array", scopesArray);
         } else {
           filter.scope = value;
+          console.log(value);
         }
       }
     } else if (key === "sector") {
@@ -34,5 +35,7 @@ export function getSearchFilter(searchQuery) {
       filter.companyName = { $regex: value, $options: "i" };
     }
   });
+  console.log("Final filter:", filter);
+
   return filter;
 }
