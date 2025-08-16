@@ -6,12 +6,16 @@ import { getSearchFilter } from "../../../../lib/getSearchFilter";
 export async function GET(request) {
   try {
     await connectToDatabase();
+
     const { searchParams } = new URL(request.url);
     const searchQuery = searchParams.get("search") || "";
     const filter = getSearchFilter(searchQuery);
+    const count = await Data.countDocuments(filter);
+    console.log("Matching documents:", count);
 
     const data = await Data.find(filter);
     const totallength = data.length;
+
     return NextResponse.json(
       {
         data,
